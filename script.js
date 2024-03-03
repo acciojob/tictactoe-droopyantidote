@@ -50,6 +50,8 @@ document.addEventListener('DOMContentLoaded', function () {
     function startGame() {
         currentPlayer = player1Input.value;
         message.textContent = `${currentPlayer}, you're up`;
+        board = ['', '', '', '', '', '', '', '', '']; // Reset board
+        gameOver = false; // Reset game over flag
         cells.forEach((cell, index) => {
             cell.textContent = '';
             cell.addEventListener('click', () => {
