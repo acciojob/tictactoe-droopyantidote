@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const [a, b, c] = condition;
             if (board[a] && board[a] === board[b] && board[a] === board[c]) {
                 gameOver = true;
-                message.textContent = `${currentPlayer} congratulations you won!`;
+                message.textContent = `${currentPlayer}, congratulations you won!`;
                 break;
             }
         }
@@ -37,10 +37,12 @@ document.addEventListener('DOMContentLoaded', function () {
     function handleCellClick(index) {
         if (board[index] === '' && !gameOver) {
             board[index] = currentPlayer === player1Input.value ? 'X' : 'O';
-            document.getElementById(index + 1).textContent = board[index];
+            cells[index].textContent = board[index];
             checkWinner();
-            currentPlayer = currentPlayer === player1Input.value ? player2Input.value : player1Input.value;
-            message.textContent = `${currentPlayer}, you're up`;
+            if (!gameOver) {
+                currentPlayer = currentPlayer === player1Input.value ? player2Input.value : player1Input.value;
+                message.textContent = `${currentPlayer}, you're up`;
+            }
         }
     }
 
@@ -48,11 +50,11 @@ document.addEventListener('DOMContentLoaded', function () {
     function startGame() {
         currentPlayer = player1Input.value;
         message.textContent = `${currentPlayer}, you're up`;
-        cells.forEach(cell => {
+        cells.forEach((cell, index) => {
             cell.textContent = '';
             cell.addEventListener('click', () => {
                 if (!gameOver) {
-                    handleCellClick(parseInt(cell.id) - 1);
+                    handleCellClick(index);
                 }
             });
         });
